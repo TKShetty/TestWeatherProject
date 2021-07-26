@@ -18,34 +18,38 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.test.weatherProj.utils.ConfigLoader;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
- * 
  * Driver Factory class to initialize Driver and invoke required browser
+ * 
+ * @author TShetty
  *
  */
 public class DriverFactory {
 
-	private WebDriver driver;
 	private Properties prop;
-
+	public OptionsManager optionsManager;
 	public static ThreadLocal<WebDriver> webDriverThread = new ThreadLocal<>();
 
 	/**
-	 * This method is used to initialize the driver on the basis of given browser
+	 * Initialize the driver on the basis of given browser
+	 * 
+	 * @param prop
+	 * @return
 	 */
 	public WebDriver intializeDriver(Properties prop) {
-
 		String browserName = prop.getProperty("browser").trim();
 		String browserVersion = prop.getProperty("browserversion").trim();
-
+		optionsManager = new OptionsManager(prop);
 		if (browserName.equals("chrome")) {
 			WebDriverManager.chromedriver().setup();
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_remoteDriver("chrome", browserVersion);
 			} else {
-				webDriverThread.set(new ChromeDriver());
+				webDriverThread.set(new ChromeDriver(optionsManager.getChromeOptions()));
 			}
 
 		} else if (browserName.equals("firefox")) {
@@ -53,13 +57,11 @@ public class DriverFactory {
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
 				init_remoteDriver("firefox", browserVersion);
 			} else {
-				webDriverThread.set(new FirefoxDriver());
+				webDriverThread.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
 			}
 		} else {
 			System.out.println("Please pass the right brower: " + browserName);
 		}
-
-		getDriver().get(prop.getProperty("url"));
 		getDriver().manage().deleteAllCookies();
 		getDriver().manage().window().maximize();
 		return getDriver();
@@ -97,7 +99,7 @@ public class DriverFactory {
 	}
 
 	/**
-	 * this is used to initialize the prop from config file
+	 * Initialize the prop from config file
 	 * 
 	 * @return
 	 */
@@ -117,11 +119,15 @@ public class DriverFactory {
 		return prop;
 	}
 
-	/*
-	 * capture screenShot
+	/**
+	 * Capture screenshot
 	 * 
+	 * @param testCaseName
+	 * @param driver
+	 * @return
+	 * @throws IOException
 	 */
-	public String getScreenShotPath(String testCaseName, WebDriver driver) throws IOException {
+	public static String getScreenShotPath(String testCaseName, WebDriver driver) throws IOException {
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File sourceFile = ts.getScreenshotAs(OutputType.FILE);
 		String encodedBase64 = null;
