@@ -11,7 +11,9 @@ import com.test.weatherProj.api.StatusCode;
 import com.test.weatherProj.applicationApi.WeatherAPI;
 import com.test.weatherProj.pages.HomePage;
 import com.test.weatherProj.pages.WeatherForecastPage;
+import com.test.weatherProj.utils.CustomException;
 import com.test.weatherProj.utils.DataLoader;
+import com.test.weatherProj.utils.MessagesConst;
 import com.test.weatherProj.utils.UtilityClass;
 
 import io.restassured.response.Response;
@@ -19,6 +21,7 @@ import io.restassured.response.Response;
 public class LandingPageTest extends BaseTest {
 
 	public WebDriver driver;
+	String CityName = "CityName";
 	SoftAssert softAssert = new SoftAssert();
 
 	@BeforeMethod
@@ -27,8 +30,8 @@ public class LandingPageTest extends BaseTest {
 	}
 
 	@Test
-	public void verifyTemperature() {
-		String cityName = DataLoader.getInstance().getPropertyValue("CityName");
+	public void compareAndVerifyTemperatureFromDiffSource() throws CustomException {
+		String cityName = DataLoader.getInstance().getPropertyValue(CityName);
 		float uiTemp;
 		float apiTemp;
 		HomePage homePage = new HomePage(driver);
@@ -38,18 +41,18 @@ public class LandingPageTest extends BaseTest {
 			Response response = WeatherAPI.getCityWeatherAPIResponse(cityName);
 			assertStatusCode(response.statusCode(), StatusCode.CODE_200);
 			apiTemp = Float.parseFloat(WeatherAPI.getCityWeatherTemp(response));
-			compareTemperature(uiTemp,apiTemp);
-			if(UtilityClass.getVariance(new float[] {uiTemp,apiTemp})>1) {
-			 throw new Exception();	
+			compareTemperature(uiTemp, apiTemp);
+			if (UtilityClass.getVariance(new float[] { uiTemp, apiTemp }) > 1) {
+				throw new CustomException(MessagesConst.VARIANCE_MSG);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (CustomException e) {
+			throw new CustomException(e.getMessage());
 		} finally {
 			softAssert.assertAll();
 		}
 	}
 
 	private void compareTemperature(Float uiTemp, Float apiTemp) {
-		softAssert.assertEquals(uiTemp, apiTemp, "API and UI Temperature are not equal.");
+		softAssert.assertEquals(uiTemp, apiTemp, MessagesConst.TEMPERATURE_UNEQUAL_MSG);
 	}
 }

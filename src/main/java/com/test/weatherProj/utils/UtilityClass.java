@@ -18,6 +18,7 @@ public class UtilityClass {
 		for (int i = 0; i < data.length; i++) {
 			variance += Math.pow(data[i] - mean, 2);
 		}
-		return variance /= data.length;
+		variance=variance /= data.length;
+		return variance;
 	}
 }

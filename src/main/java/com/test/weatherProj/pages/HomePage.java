@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.test.weatherProj.utils.CustomException;
 import com.test.weatherProj.utils.ElementUtil;
 
 public class HomePage {
@@ -21,18 +22,18 @@ public class HomePage {
 		elementUtil = new ElementUtil(this.driver);
 	}
 
-	public WeatherForecastPage searchCity(final String cityName) throws Exception {
+	public WeatherForecastPage searchCity(final String cityName) throws CustomException {
 		elementUtil.doSendKeys(searchTxtBox, cityName);
 		try {
 			elementUtil.waitForElementsToBeVisible(searchResult, 15);
 		} catch (Exception e) {
-			throw new Exception("Search results are not getting displayed for following city " + cityName);
+			throw new CustomException("Search results are not getting displayed for following city " + cityName);
 		}
 		selectCityFrmSearchResultDD(cityName);
 		return new WeatherForecastPage(driver);
 	}
 
-	private void selectCityFrmSearchResultDD(final String cityName) throws Exception {
+	private void selectCityFrmSearchResultDD(final String cityName) throws CustomException {
 		Boolean cityFound = false;
 		List<WebElement> searchResults = elementUtil.doGetElements(searchResult);
 		for (WebElement searchResult : searchResults) {
@@ -44,6 +45,6 @@ public class HomePage {
 			}
 		}
 		if (!cityFound)
-			throw new Exception("Unable to find city in search results");
+			throw new CustomException("Unable to find city in search results");
 	}
 }

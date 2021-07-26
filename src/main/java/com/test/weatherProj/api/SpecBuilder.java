@@ -2,6 +2,7 @@ package com.test.weatherProj.api;
 
 import static com.test.weatherProj.api.Route.BASE_PATH;
 
+import com.test.weatherProj.utils.APIConstants;
 import com.test.weatherProj.utils.ConfigLoader;
 
 import io.restassured.builder.RequestSpecBuilder;
@@ -14,7 +15,7 @@ public class SpecBuilder {
 	static ConfigLoader configLoader = ConfigLoader.getInstance();
 
 	public static RequestSpecification getRequestSpec() {
-		String baseURI = configLoader.getPropertyValue("BASE_URI");
+		String baseURI = configLoader.getPropertyValue(APIConstants.BASE_URI);
 
 		return new RequestSpecBuilder().setBaseUri(baseURI).setBasePath(BASE_PATH).setContentType(ContentType.JSON)
 /*				.log(LogDetail.ALL)*/.build();
