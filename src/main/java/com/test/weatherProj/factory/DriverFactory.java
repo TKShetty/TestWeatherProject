@@ -127,7 +127,7 @@ public class DriverFactory {
 	 * @return
 	 * @throws IOException
 	 */
-	public String getScreenShotPath(String testCaseName, WebDriver driver) throws IOException {
+	public static String getScreenShotPath(String testCaseName, WebDriver driver) throws IOException {
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File sourceFile = ts.getScreenshotAs(OutputType.FILE);
 		String encodedBase64 = null;

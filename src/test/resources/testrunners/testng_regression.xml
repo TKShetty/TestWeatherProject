@@ -2,12 +2,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Weather Test Suite" verbose="1">
+	<listeners>
+		<listener class-name="com.test.weatherProj.listeners.TestListeners" />
+	</listeners>
 	<test name="Test City Temperature">
+
 		<parameter name="browser" value="chrome" />
 		<parameter name="browserversion" value="92" />
 		<parameter name="cityName" value="Mumbai" />
 		<classes>
-			<class name="com.test.weatherProj.tests.LandingPageTest"/>
+			<class name="com.test.weatherProj.tests.LandingPageTest" />
 		</classes>
 	</test>
 </suite>
