@@ -5,8 +5,9 @@
 	<test name="Test City Temperature">
 		<parameter name="browser" value="chrome" />
 		<parameter name="browserversion" value="92" />
+		<parameter name="cityName" value="Mumbai" />
 		<classes>
-			<class name="com.test.weatherProj.tests.BaseTest" />
+			<class name="com.test.weatherProj.tests.LandingPageTest"/>
 		</classes>
 	</test>
 </suite>
