@@ -18,6 +18,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.test.weatherProj.utils.ConfigLoader;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
@@ -39,7 +41,6 @@ public class DriverFactory {
 	 * @return
 	 */
 	public WebDriver intializeDriver(Properties prop) {
-
 		String browserName = prop.getProperty("browser").trim();
 		String browserVersion = prop.getProperty("browserversion").trim();
 		optionsManager = new OptionsManager(prop);

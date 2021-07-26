@@ -24,5 +24,8 @@ public class ConfigLoader {
 		else
 			throw new RuntimeException("property "+propertyName+" is not specified in the data.properties file");
 	}
+	public Properties getProperties() {
+		return properties;
+	}
 
 }
