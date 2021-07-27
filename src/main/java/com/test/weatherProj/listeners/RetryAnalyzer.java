@@ -13,28 +13,17 @@ import com.test.weatherProj.factory.DriverFactory;
 public class RetryAnalyzer implements IRetryAnalyzer {
 
 	private int count = 0;
-	private int retryLimit = 0;
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.testng.IRetryAnalyzer#retry(org.testng.ITestResult)
-	 * 
-	 * This method decides how many times a test needs to be rerun. TestNg will call
-	 * this method every time a test fails. So we can put some code in here to
-	 * decide when to rerun the test.
-	 * 
-	 * Note: This method will return true if a tests needs to be retried and false
-	 * it not.
-	 *
-	 */
+	private int retryLimit = 1;
 
 	@Override
 	public boolean retry(ITestResult iTestResult) {
+		if(System.getProperty("retryLimit")!=null)
+			retryLimit=Integer.parseInt(System.getProperty("retryLimit"));
 		if (!iTestResult.isSuccess()) {
 			if (count < retryLimit) {
 				count++;
 				iTestResult.setStatus(ITestResult.FAILURE);
-				// extendReportsFailOperations(iTestResult);
+				extendReportsFailOperations(iTestResult);
 				return true;
 			}
 		} else {

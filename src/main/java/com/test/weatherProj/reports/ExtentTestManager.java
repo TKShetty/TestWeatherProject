@@ -1,15 +1,13 @@
 package com.test.weatherProj.reports;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-
 public class ExtentTestManager {
-
 	static Map<Integer, ExtentTest> extentTestMap = new HashMap<>();
-	static ExtentReports extent = ExtentReporterNG.getReportObject();
+	static ExtentReports extent = ExtentReporterNG.getExtentReports();
 
 	public static synchronized ExtentTest getTest() {
 		return extentTestMap.get((int) Thread.currentThread().getId());
@@ -20,5 +18,4 @@ public class ExtentTestManager {
 		extentTestMap.put((int) Thread.currentThread().getId(), test);
 		return test;
 	}
-
 }

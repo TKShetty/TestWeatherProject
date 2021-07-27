@@ -1,5 +1,9 @@
 package com.test.weatherProj.listeners;
 
+import static com.test.weatherProj.reports.ExtentReporterNG.getExtentReports;
+import static com.test.weatherProj.reports.ExtentTestManager.getTest;
+import static com.test.weatherProj.reports.ExtentTestManager.startTest;
+
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -13,13 +17,8 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.ITestAnnotation;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.test.weatherProj.factory.DriverFactory;
-import static com.test.weatherProj.reports.ExtentReporterNG.getReportObject;
-import static com.test.weatherProj.reports.ExtentTestManager.getTest;
-import static com.test.weatherProj.reports.ExtentTestManager.startTest;
 
 
 
@@ -38,7 +37,7 @@ public class TestListeners extends DriverFactory implements ITestListener, IAnno
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        getReportObject().flush();
+    	getExtentReports().flush();
     }
 
     @Override
