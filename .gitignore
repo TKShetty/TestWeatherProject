@@ -4,6 +4,7 @@ test-output/
 build/
 screenshot/
 logs/
+reports/
 
 ##############################
 ## Java

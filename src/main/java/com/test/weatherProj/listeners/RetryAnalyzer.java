@@ -13,7 +13,7 @@ import com.test.weatherProj.factory.DriverFactory;
 public class RetryAnalyzer implements IRetryAnalyzer {
 
 	private int count = 0;
-	private int retryLimit = 1;
+	private int retryLimit = 0;
 	/*
 	 * (non-Javadoc)
 	 * 
