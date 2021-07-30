@@ -1,7 +1,7 @@
 
 About The Project
 
-This Project intended to provide the single structure for both UI and API automation in order to verify/compare the value from both web data and API.
+This Project intended to provide the single structure for both UI and API automation. In this project consist of single testcase to verify/compare the temperature value from both web data and API.
 
 Built With
 
